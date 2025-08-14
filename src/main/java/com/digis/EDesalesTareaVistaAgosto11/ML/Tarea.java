@@ -1,21 +1,23 @@
-
 package com.digis.EDesalesTareaVistaAgosto11.ML;
 
-
 import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class Tarea {
-    int id;
-    String titulo;
-    Date fechaVencimiento;
-    EstadoTarea idEstadoTarea;
 
-    public int getId() {
-        return id;
+    int idTarea;
+    String titulo;
+    String descripcion;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fechaVencimiento;
+    EstadoTarea estadoTarea;
+
+    public int getIdTarea() {
+        return idTarea;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdTarea(int idTarea) {
+        this.idTarea = idTarea;
     }
 
     public String getTitulo() {
@@ -26,6 +28,14 @@ public class Tarea {
         this.titulo = titulo;
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
     public Date getFechaVencimiento() {
         return fechaVencimiento;
     }
@@ -34,15 +44,12 @@ public class Tarea {
         this.fechaVencimiento = fechaVencimiento;
     }
 
-    public EstadoTarea getIdEstadoTarea() {
-        return idEstadoTarea;
+    public EstadoTarea getEstadoTarea() {
+        return estadoTarea;
     }
 
-    public void setIdEstadoTarea(EstadoTarea idEstadoTarea) {
-        this.idEstadoTarea = idEstadoTarea;
+    public void setEstadoTarea(EstadoTarea estadoTarea) {
+        this.estadoTarea = estadoTarea;
     }
-    
-    
-            
-    
+
 }

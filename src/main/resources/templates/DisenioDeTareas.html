@@ -1,15 +1,66 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout}"> 
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Form</title>
     </head>
-    <body>
-        <div>TODO write content</div>
+
+    <body layout:fragment="body">
+        <div class="container mt-3">
+            <div class="card mx-auto" style="max-width: 500px;"> 
+                <div class="card-body bg-info bg-opacity-25 rounded">
+                    <h5 class="card-title mb-3">Hola, un gusto</h5> 
+
+                    <form method="post" th:object="${tarea}" th:action="@{/tarea/EditarTarea}">
+                        <input type="hidden" th:field="*{idTarea}" />
+
+                        <div class="mb-3">
+                            <label for="exampleTituloTarea" class="form-label">Título Tarea</label>
+                            <input type="text" class="form-control" id="exampleTituloTarea" placeholder="Ingrese el título" th:field="*{titulo}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleDescripcion" class="form-label">Descripción</label>
+                            <input type="text" class="form-control" id="exampleDescripcion" placeholder="Ingrese la descripción" th:field="*{descripcion}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="fechaVencimiento" class="form-label">Fecha de Vencimiento</label>
+                            <input type="date" class="form-control" id="fechaVencimiento" th:field="*{fechaVencimiento}">
+                        </div>
+                        <input type="hidden" id="estadoActual" th:value="*{estadoTarea.idEstadoTarea}" />
+
+                        <div class="mb-3">
+                            <label for="estado" class="form-label">Estado</label>
+                            <select id="ddlestado" class="form-select" th:field="*{estadoTarea.idEstadoTarea}">
+                                <option value="0" >Seleccione Estado de la Tarea</option>
+                                <option  th:each="estado : ${estado}"
+                                         th:value="${estado.idEstadoTarea}"
+                                         th:text="${estado.tipoEstado}"></option>
+                            </select>
+
+
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                const estadoActual = $('#estadoActual').val();
+                if (estadoActual) {
+                    $('#ddlestado').val(estadoActual);
+                }
+            });
+        </script>
+
     </body>
 </html>

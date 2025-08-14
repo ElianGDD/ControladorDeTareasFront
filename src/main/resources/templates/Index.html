@@ -1,30 +1,60 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="~{layout}">-->
+      layout:decorate="~{layout}"> 
     <head>
-        <title>Mostrar Tareas</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Index</title>
     </head>
-    <body>
-        <div>Hola</div>
-        <table class="">
-            <thead>
-                <tr>
-                    <th>Titulo</th>
-                    <th>Descripción</th>
-                    <th>Fecha de Vencimiento</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
-            </tbody>
-        </table>
-    </body>
+
+    <div layout:fragment="body">
+        <div class="container-sm">
+            <h1>Mostrar Tareas</h1>
+            <div class="table-responsive rounded-3 border">
+                <table class="table table-bordered mb-0">
+                    <thead class="table-info">
+                        <tr>
+                            <th>Título</th>
+                            <th>Descripción</th>
+                            <th>Fecha de Vencimiento</th>
+                            <th>Estado</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-light">
+                        <tr th:each="tarea : ${tarea}">
+                            <td th:text="${tarea.titulo}">Tarea 2</td>
+                            <td th:text="${tarea.descripcion}">Descripción 1</td>
+                            <td th:text="${#dates.format(tarea.fechaVencimiento, 'yyyy-MM-dd')}">2025-08-20</td>
+                            <td th:text="${tarea.estadoTarea.tipoEstado}">Pendiente</td>
+                            <td class="text-center">
+                                <a th:href="@{/tarea/formEditable(idTarea=${tarea.idTarea})}" 
+                                   class="btn btn-outline-danger btn-sm d-flex justify-content-center align-items-center">
+                                    <i class="bi bi-pencil-square fs-1"></i>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <form th:action="@{/tarea/EliminarTarea}" method="post" style="display:inline">
+                                    <input type="hidden" name="idTarea" th:value="${tarea.idTarea}" />
+                                    <button type="submit" class="btn btn-outline-danger btn-sm d-flex justify-content-center align-items-center" 
+                                            onclick="return confirm('¿Seguro que quieres eliminar esta tarea?');">
+                                        <i class="bi bi-file-x fs-1"></i>
+                                    </button>
+                                </form>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                
+
+            </div>
+<div class="container">
+                    <a th:href="@{/tarea/formEditable(idTarea=0)}" class="">
+                        <i class="bi bi-file-plus-fill fs-1"></i>
+                    </a>
+                </div>
+        </div>
+    </div>
 </html>
